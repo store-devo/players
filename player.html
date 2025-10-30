@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Hero Mobile Legends</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+      th {
+        background-color: #007bff;
+        color: white;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Daftar Hero Mobile Legends</h1>
+
+    <table id="heroTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Hero</th>
+          <th>Role</th>
+          <th>Lane</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      async function loadData() {
+        try {
+          const res = await fetch("http://localhost:8000/mobile_legends/");
+          const data = await res.json();
+
+          const tbody = document.querySelector("#heroTable tbody");
+          tbody.innerHTML = ""; // bersihkan isi tabel
+
+          data.forEach((item) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${item.id}</td>
+              <td>${item.hero}</td>
+              <td>${item.role}</td>
+              <td>${item.lane}</td>
+            `;
+            tbody.appendChild(row);
+          });
+        } catch (error) {
+          console.error("Gagal memuat data:", error);
+        }
+      }
+
+      loadData();
+    </script>
+  </body>
+</html>
+
